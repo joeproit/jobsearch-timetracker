@@ -5,6 +5,8 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Navbar from "./components/navbar.component";
 import TrackerList from "./components/tracker-list.component";
 import CreateTracker from "./components/create-tracker.component";
+import Login from "./components/login.component";
+import Register from "./components/register.component";
 
 function App() {
   return (
@@ -15,6 +17,8 @@ function App() {
         <Routes>
           <Route path="/" element={<TrackerList />} />
           <Route path="/create" element={<CreateTracker />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
         </Routes>
       </div>
     </Router>
