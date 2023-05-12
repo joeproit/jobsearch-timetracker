@@ -15,7 +15,7 @@ Jobsearch TimeTracker is a simple and intuitive web application built with Node.
 
 ## Tech Stack
 
-- **Frontend:** React.js
+- **Frontend:** React.js, Bootstrap
 - **Backend:** Node.js, Express.js
 - **Database:** MongoDB
 
