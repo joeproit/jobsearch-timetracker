@@ -1,48 +1,39 @@
 const express = require('express');
 const router = express.Router();
 const User = require('../models/User');
-const bcrypt = require('bcryptjs'); // for password hashing
+const crypto = require('crypto');
 
-// Registration route
-router.post('/register', async (req, res) => {
-    const { username, password } = req.body;
+// Generate unique URL
+router.post('/generate', async (req, res) => {
+  const uniqueUrl = crypto.randomBytes(10).toString('hex');
 
-    // Check if username already exists
-    const user = await User.findOne({ username });
-    if (user) return res.status(400).json({ message: 'Username already exists' });
+  const user = new User({
+    uniqueUrl: uniqueUrl,
+    password: req.body.password ? await bcrypt.hash(req.body.password, 10) : null,
+  });
 
-    // Hash password
-    const hashedPassword = await bcrypt.hash(password, 10);
+  const result = await user.save();
 
-    // Create new user
-    const newUser = new User({
-        username,
-        password: hashedPassword
-    });
-
-    // Save user and return response
-    try {
-        await newUser.save();
-        res.json({ message: 'User registered successfully' });
-    } catch (err) {
-        res.status(500).json({ message: 'Error registering user', err });
-    }
+  res.send({ uniqueUrl });
 });
 
-// Login route
-router.post('/login', async (req, res) => {
-    const { username, password } = req.body;
+// Authenticate user (for password-protected URLs)
+router.post('/authenticate', async (req, res) => {
+  const user = await User.findOne({ uniqueUrl: req.body.uniqueUrl });
 
-    // Check if user exists
-    const user = await User.findOne({ username });
-    if (!user) return res.status(400).json({ message: 'Invalid username or password' });
+  if (!user) {
+    return res.status(404).send({
+      message: 'User not found',
+    });
+  }
 
-    // Check password
-    const validPassword = await bcrypt.compare(password, user.password);
-    if (!validPassword) return res.status(400).json({ message: 'Invalid username or password' });
+  if (user.password && !(await bcrypt.compare(req.body.password, user.password))) {
+    return res.status(400).send({
+      message: 'Invalid password',
+    });
+  }
 
-    // Return success message
-    res.json({ message: 'Logged in successfully' });
+  res.send({ message: 'Success' });
 });
 
 module.exports = router;
