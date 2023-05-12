@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 import Navbar from "./components/navbar.component";
@@ -12,8 +12,10 @@ function App() {
       <div className="container">
         <Navbar />
         <br/>
-        <Route path="/" exact component={TrackerList} />
-        <Route path="/create" component={CreateTracker} />
+        <Routes>
+          <Route path="/" element={<TrackerList />} />
+          <Route path="/create" element={<CreateTracker />} />
+        </Routes>
       </div>
     </Router>
   );
