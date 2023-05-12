@@ -1,28 +1,28 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import React from 'react';
+import { NavLink } from 'react-router-dom';
 
-export default class Navbar extends Component {
-  render() {
-    return (
-      <nav className="navbar navbar-dark bg-dark navbar-expand-lg">
-        <Link to="/" className="navbar-brand">TimeTracker</Link>
-        <div className="collapse navbar-collapse">
+const Navbar = () => {
+  return (
+    <nav className="navbar navbar-dark bg-dark navbar-expand-lg">
+      <NavLink to="/" className="navbar-brand">JobSearch TimeTracker</NavLink>
+      <div className="collapse navbar-collapse">
         <ul className="navbar-nav mr-auto">
           <li className="navbar-item">
-          <Link to="/" className="nav-link">Trackers</Link>
+            <NavLink to="/" className="nav-link" activeClassName="active" end>Trackers</NavLink>
           </li>
           <li className="navbar-item">
-          <Link to="/create" className="nav-link">Create Tracker</Link>
+            <NavLink to="/create" className="nav-link" activeClassName="active">Create Tracker</NavLink>
           </li>
           <li className="navbar-item">
-          <Link to="/register" className="nav-link">Create User</Link>
+            <NavLink to="/create-account" className="nav-link" activeClassName="active">Create Account</NavLink>
           </li>
           <li className="navbar-item">
-          <Link to="/login" className="nav-link">Login</Link>
+            <NavLink to="/authenticate" className="nav-link" activeClassName="active">Authenticate Account</NavLink>
           </li>
         </ul>
-        </div>
-      </nav>
-    );
-  }
+      </div>
+    </nav>
+  );
 }
+
+export default Navbar;
