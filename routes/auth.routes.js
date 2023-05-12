@@ -1,52 +1,48 @@
 const express = require('express');
 const router = express.Router();
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
 const User = require('../models/User');
+const bcrypt = require('bcryptjs'); // for password hashing
 
-// User registration
+// Registration route
 router.post('/register', async (req, res) => {
-  // Hash the password
-  const hashedPassword = await bcrypt.hash(req.body.password, 10);
+    const { username, password } = req.body;
 
-  const user = new User({
-    username: req.body.username,
-    password: hashedPassword,
-  });
+    // Check if username already exists
+    const user = await User.findOne({ username });
+    if (user) return res.status(400).json({ message: 'Username already exists' });
 
-  const result = await user.save();
+    // Hash password
+    const hashedPassword = await bcrypt.hash(password, 10);
 
-  const { password, ...data } = await result.toJSON();
+    // Create new user
+    const newUser = new User({
+        username,
+        password: hashedPassword
+    });
 
-  res.send(data);
+    // Save user and return response
+    try {
+        await newUser.save();
+        res.json({ message: 'User registered successfully' });
+    } catch (err) {
+        res.status(500).json({ message: 'Error registering user', err });
+    }
 });
 
-// User login
+// Login route
 router.post('/login', async (req, res) => {
-  const user = await User.findOne({ username: req.body.username });
+    const { username, password } = req.body;
 
-  if (!user) {
-    return res.status(404).send({
-      message: 'User not found',
-    });
-  }
+    // Check if user exists
+    const user = await User.findOne({ username });
+    if (!user) return res.status(400).json({ message: 'Invalid username or password' });
 
-  if (!(await bcrypt.compare(req.body.password, user.password))) {
-    return res.status(400).send({
-      message: 'Invalid credentials',
-    });
-  }
+    // Check password
+    const validPassword = await bcrypt.compare(password, user.password);
+    if (!validPassword) return res.status(400).json({ message: 'Invalid username or password' });
 
-  const token = jwt.sign({ _id: user._id }, 'secret');
-
-  res.cookie('jwt', token, {
-    httpOnly: true,
-    maxAge: 24 * 60 * 60 * 1000, // 1 day
-  });
-
-  res.send({
-    message: 'Success',
-  });
+    // Return success message
+    res.json({ message: 'Logged in successfully' });
 });
 
 module.exports = router;
