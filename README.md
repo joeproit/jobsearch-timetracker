@@ -1,5 +1,7 @@
 # Jobsearch TimeTracker by JoeProIT
 
+![Screen](derp-image.png)
+
 ![GitHub](https://img.shields.io/github/license/joeproit/jobsearch-timetracker)
 ![GitHub last commit](https://img.shields.io/github/last-commit/joeproit/jobsearch-timetracker)
 ![GitHub top language](https://img.shields.io/github/languages/top/joeproit/jobsearch-timetracker)
