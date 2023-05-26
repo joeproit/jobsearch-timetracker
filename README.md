@@ -2,7 +2,7 @@
 
 ![Screen](derp-image.png)
 
-![GitHub](https://img.shields.io/github/license/joeproit/jobsearch-timetracker)
+![Unlicense](https://img.shields.io/badge/license-Unlicense-blue.svg)
 ![GitHub last commit](https://img.shields.io/github/last-commit/joeproit/jobsearch-timetracker)
 ![GitHub top language](https://img.shields.io/github/languages/top/joeproit/jobsearch-timetracker)
 
