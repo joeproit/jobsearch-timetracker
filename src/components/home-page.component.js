@@ -1,5 +1,6 @@
 import React from 'react';
 import { useTable } from 'react-table';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const HomePage = () => {
   const storedEntries = JSON.parse(sessionStorage.getItem('entries') || '[]');
@@ -36,8 +37,8 @@ const HomePage = () => {
   } = useTable({ columns, data });
 
   return (
-    <table {...getTableProps()} style={{ border: 'solid 1px blue' }}>
-      <thead>
+    <table {...getTableProps()} className="table table-striped">
+      <thead className="thead-dark">
         {headerGroups.map((headerGroup) => (
           <tr {...headerGroup.getHeaderGroupProps()}>
             {headerGroup.headers.map((column) => (
