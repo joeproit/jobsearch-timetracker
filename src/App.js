@@ -5,8 +5,8 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Navbar from "./components/navbar.component";
 import TrackerList from "./components/tracker-list.component";
 import CreateTracker from "./components/create-tracker.component";
-import CreateAccount from "./components/create-account.component";
-import AuthenticateAccount from "./components/authenticate-account.component";
+import TimeEntryModal from "./components/time-entry-modal.component";
+import NotesPage from "./components/notes-page.component";
 
 function App() {
   return (
@@ -17,8 +17,8 @@ function App() {
         <Routes>
           <Route path="/" element={<TrackerList />} index/>
           <Route path="/create" element={<CreateTracker />} />
-          <Route path="/create-account" element={<CreateAccount />} />
-          <Route path="/authenticate" element={<AuthenticateAccount />} />
+          <Route path="/time-entry" element={<TimeEntryModal />} />
+          <Route path="/notes" element={<NotesPage />} />
         </Routes>
       </div>
     </Router>
