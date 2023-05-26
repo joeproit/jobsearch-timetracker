@@ -8,7 +8,6 @@ import TimeEntryModal from './components/time-entry-modal.component';
 import useIndexedDB from './useIndexedDB';
 
 function App() {
-  const [modalShow, setModalShow] = useState(false);
   const [entries, setEntries] = useState([]);
   const { getEntries, addEntry } = useIndexedDB('timeEntries');
 
@@ -24,20 +23,18 @@ function App() {
     await addEntry(entry);
     const allEntries = await getEntries();
     setEntries(allEntries);
-    setModalShow(false);
   };
 
   return (
     <Router>
       <div className="container">
-        <Navbar onNewEntryClick={() => setModalShow(true)} />
+        <Navbar onNewEntryClick={() => {}} />
         <br/>
         <Routes>
           <Route path="/" element={<HomePage entries={entries} />} index/>
         </Routes>
         <TimeEntryModal 
-          show={modalShow} 
-          onHide={() => setModalShow(false)}
+          show={false} 
           onSubmit={handleEntrySubmit}
         />
       </div>

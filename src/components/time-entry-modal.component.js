@@ -6,8 +6,10 @@ const TimeEntryModal = (props) => {
   const [duration, setDuration] = useState('');
   const [category, setCategory] = useState('');
   const [notes, setNotes] = useState('');
+  const [show, setShow] = useState(false); // State for controlling modal visibility
 
-  const handleClose = () => props.onHide();
+  const handleShow = () => setShow(true); // Function to show the modal
+  const handleClose = () => setShow(false); // Function to hide the modal
 
   const handleSubmit = (event) => {
     event.preventDefault();
