@@ -1,4 +1,4 @@
-# Jobsearch TimeTracker by JoeProIT
+# TimeTracker by JoeProIT
 
 ![Screen](derp-image.png)
 
