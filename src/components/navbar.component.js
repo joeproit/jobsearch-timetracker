@@ -1,5 +1,6 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
+import TimeEntryModal from './time-entry-modal.component';
 
 const Navbar = () => {
   return (
@@ -8,18 +9,14 @@ const Navbar = () => {
       <div className="collapse navbar-collapse">
         <ul className="navbar-nav mr-auto">
           <li className="navbar-item">
-            <NavLink to="/" className="nav-link" activeClassName="active" end>Trackers</NavLink>
-          </li>
-          <li className="navbar-item">
-            <NavLink to="/create" className="nav-link" activeClassName="active">Create Tracker</NavLink>
-          </li>
-          <li className="navbar-item">
-            <NavLink to="/create-account" className="nav-link" activeClassName="active">Create Account</NavLink>
-          </li>
-          <li className="navbar-item">
-            <NavLink to="/authenticate" className="nav-link" activeClassName="active">Authenticate Account</NavLink>
+            <NavLink to="/" className="nav-link" activeClassName="active" end>Home</NavLink>
           </li>
         </ul>
+        <div className="navbar-nav ml-auto">
+          <li className="navbar-item">
+            <TimeEntryModal />
+          </li>
+        </div>
       </div>
     </nav>
   );
