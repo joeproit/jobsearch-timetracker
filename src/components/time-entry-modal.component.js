@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Modal, Button, Form } from 'react-bootstrap';
 
-const TimeEntryModal = (props) => {
-  const [date, setDate] = useState(new Date().toISOString().substr(0,10));
+const TimeEntryModal = () => {
+  const [date, setDate] = useState(new Date().toISOString().substr(0, 10));
   const [duration, setDuration] = useState('');
   const [category, setCategory] = useState('');
   const [notes, setNotes] = useState('');
@@ -14,10 +14,15 @@ const TimeEntryModal = (props) => {
   const handleSubmit = (event) => {
     event.preventDefault();
     const entry = { date, duration, category, notes };
-    props.onSubmit(entry);
+
+    // Store the entry in the browser's storage
+    const storedEntries = JSON.parse(sessionStorage.getItem('entries') || '[]');
+    storedEntries.push(entry);
+    sessionStorage.setItem('entries', JSON.stringify(storedEntries));
+
     handleClose();
   };
-  
+
   return (
     <>
       <Button variant="primary" onClick={handleShow}>
@@ -32,15 +37,32 @@ const TimeEntryModal = (props) => {
           <Form onSubmit={handleSubmit}>
             <Form.Group>
               <Form.Label>Date</Form.Label>
-              <Form.Control type="date" value={date} onChange={e => setDate(e.target.value)} required />
+              <Form.Control
+                type="date"
+                value={date}
+                onChange={(e) => setDate(e.target.value)}
+                required
+              />
             </Form.Group>
             <Form.Group>
               <Form.Label>Duration</Form.Label>
-              <Form.Control type="number" min="0" placeholder="Enter duration in hours" value={duration} onChange={e => setDuration(e.target.value)} required />
+              <Form.Control
+                type="number"
+                min="0"
+                placeholder="Enter duration in hours"
+                value={duration}
+                onChange={(e) => setDuration(e.target.value)}
+                required
+              />
             </Form.Group>
             <Form.Group>
               <Form.Label>Category</Form.Label>
-              <Form.Control as="select" value={category} onChange={e => setCategory(e.target.value)} required>
+              <Form.Control
+                as="select"
+                value={category}
+                onChange={(e) => setCategory(e.target.value)}
+                required
+              >
                 <option value="">Select a category</option>
                 <option value="job_search">Job Search</option>
                 <option value="applications">Applications</option>
@@ -52,7 +74,12 @@ const TimeEntryModal = (props) => {
             </Form.Group>
             <Form.Group>
               <Form.Label>Notes</Form.Label>
-              <Form.Control as="textarea" rows={3} value={notes} onChange={e => setNotes(e.target.value)} />
+              <Form.Control
+                as="textarea"
+                rows={3}
+                value={notes}
+                onChange={(e) => setNotes(e.target.value)}
+              />
             </Form.Group>
             <Button variant="primary" type="submit">
               Submit
